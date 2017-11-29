@@ -1,0 +1,51 @@
+<div class="modal-body" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-header" ng-controller="ChildrenAgentCtrl">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+        <h1 class="modal-title">{{info.title}}</h1>
+    </div>
+    <div class="row panel-body">
+        <form name="agent_info_form" class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-sm-2">登录名：<span class="text-success h5">* </span></label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="loginname" maxlength="60" placeholder="请输入账号名..." ng-model="info.loginname"
+                           ng-required="true"/><span>登录名会作为默认的昵称</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">密码：<span class="text-success h5">* </span></label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control" name="pwd" minlength="6" maxlength="60" placeholder="请输入密码..." ng-model="info.pwd"
+                           ng-required="true" password-equally="{{info.confirmPwd}}"/><span>用户密码不能少于6位</span>
+                </div>
+              <div class="help-block col-sm-5" ng-messages="agent_info_form.pwd.$error" ng-if="agent_info_form.pwd.$dirty">
+                <div ng-messages-include="html/messages/pwdmessages.html"></div>
+              </div>
+            </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">确认密码：<span class="text-success h5">* </span></label>
+            <div class="col-sm-5">
+              <input type="password" class="form-control" name="confirmPwd" minlength="6" maxlength="60" placeholder="请输入确认密码..." ng-model="info.confirmPwd"
+                     ng-required="true" password-equally="{{info.pwd}}"/>
+            </div>
+            <div class="help-block col-sm-5" ng-messages="agent_info_form.confirmPwd.$error" ng-if="agent_info_form.confirmPwd.$dirty">
+              <div ng-messages-include="html/messages/pwdmessages.html"></div>
+            </div>
+          </div>
+        </form>
+    </div>
+
+    <div class="modal-footer" ng-if="info.close">
+        <div class="col-sm-2 col-sm-offset-10">
+            <button type="submit" class="btn btn-block btn-primary" ng-click="cancel()">关闭</button>
+        </div>
+    </div>
+    <div class="modal-footer" ng-if="!info.close">
+        <div class="col-sm-2 col-sm-offset-8">
+            <button type="submit" class="btn btn-block btn-default" ng-click="cancel()">取消</button>
+        </div>
+        <div class="col-sm-2">
+            <button type="submit" class="btn btn-block btn-success" ng-click="ok()" ng-disabled='agent_info_form.$invalid'>提交</button>
+        </div>
+    </div>
+</div>

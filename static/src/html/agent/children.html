@@ -1,0 +1,24 @@
+<div ng-controller="ChildrenAgentCtrl">
+  <div class="wrapper form-horizontal">
+    <div class="row form-group">
+      <div class="col-sm-4">
+        <div class="input-group">
+          <input type="text" ng-model="content" class="form-control" placeholder="请输入游戏ID、姓名或邀请码">
+          <span class="input-group-btn">
+                <button  ng-click="search()" class="btn btn-default"><i class="fa fa-search"></i></button>
+              </span>
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <button class="btn btn-block btn-info" ng-click="openModal('agent_add')">新增</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper">
+    <div class="panel panel-default">
+      <div class="table-responsive">
+        <div ui-grid="gridOptions" ui-grid-pagination ui-grid-exporter ui-grid-selection ui.grid.pinning ui-grid-auto-resize  ui-grid-resize-columns style="min-height:420px"></div>
+      </div>
+    </div>
+  </div>
+</div>

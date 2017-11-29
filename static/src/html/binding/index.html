@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh" data-ng-app="app">
+<head>
+  <meta charset="utf-8"/>
+  <title>代理管理系统</title>
+  <meta name="description" content="sys manage"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+  <style type="text/css">
+    body {
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMC8yOS8xMiKqq3kAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABHklEQVRIib2Vyw6EIAxFW5idr///Qx9sfG3pLEyJ3tAwi5EmBqRo7vHawiEEERHS6x7MTMxMVv6+z3tPMUYSkfTM/R0fEaG2bbMv+Gc4nZzn+dN4HAcREa3r+hi3bcuu68jLskhVIlW073tWaYlQ9+F9IpqmSfq+fwskhdO/AwmUTJXrOuaRQNeRkOd5lq7rXmS5InmERKoER/QMvUAPlZDHcZRhGN4CSeGY+aHMqgcks5RrHv/eeh455x5KrMq2yHQdibDO6ncG/KZWL7M8xDyS1/MIO0NJqdULLS81X6/X6aR0nqBSJcPeZnlZrzN477NKURn2Nus8sjzmEII0TfMiyxUuxphVWjpJkbx0btUnshRihVv70Bv8ItXq6Asoi/ZiCbU6YgAAAABJRU5ErkJggg==);
+    }
+
+    .error-template {
+      padding: 40px 15px;
+      text-align: center;
+    }
+
+    .error-actions {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    .error-actions .btn {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="error-template">
+        <!--<h2>404</h2>-->
+        <div class="error-details">
+          对不起, 请求的页面不存在!
+        </div>
+        <div class="error-actions">
+          <a href="/" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home">主页</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+  function getUrlParam(name) {
+    var hash = location.hash; //获取url中"?"符后的字串\
+    console.log('url:', hash);
+    var theRequest = {};
+    if (hash.indexOf("?") != -1) {
+      var str = hash.substr(hash.indexOf("?") + 1, hash.length);
+      var strs = str.split("&");
+      for (var i = 0; i < strs.length; i++) {
+        theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+      }
+    }
+    return theRequest[name];
+  }
+
+  (function () {
+    var openid = getUrlParam('code'), agentno = getUrlParam('state');
+    $.ajax({
+      url: '/agent/binding', type: 'POST', data: {openid: openid, agentno: agentno}, dataType: 'json'
+      , success: function (data) {
+        $('.error-details').html(data.msg);
+      }, error: function (data) {
+        console.log('error', data);
+        $('.error-details').html('网络错误，请重新绑定！');
+      }
+    });
+  })();
+</script>
+</body>
+</html>

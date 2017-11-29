@@ -1,0 +1,79 @@
+<div class="modal-body" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-header" ng-controller="ChildrenAgentCtrl">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+        <h1 class="modal-title">{{info.title}}</h1>
+    </div>
+
+    <div class="row panel-body">
+        <form name="agent_info_form" class="form-horizontal">
+          <div class="form-group" >
+            <label class="control-label col-sm-2">昵称：</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" maxlength="20" readonly ng-model="info.nickname" />
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-sm-2">真实姓名：<span class="text-success h5">* </span></label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" maxlength="20" placeholder="请输入真实姓名..." required ng-model="info.username" />
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-sm-2">邀请码：<span class="text-success h5">* </span></label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" maxlength="8" placeholder="请输入邀请码..." required ng-model="info.agentno" />
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-sm-2">游戏ID：<span class="text-success h5">* </span></label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" maxlength="10" placeholder="请输入游戏ID..." required ng-model="info.userno" />
+            </div>
+          </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">手机号：<span class="text-success h5">* </span></label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" maxlength="11" placeholder="请输入手机号..." required ng-model="info.mobile" />
+                </div>
+            </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">提成比率：<span class="text-success h5">* </span></label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control"  min="0.1" max="0.9"   placeholder="请输入0.1—0.9之间的数字" ng-model="info.rate" readonly />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">上级邀请码：</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" maxlength="8" placeholder="请输入上级邀请码..." ng-model="info.parentno" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">微信号：</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" maxlength="11" placeholder="请输入微信号..." ng-model="info.weixin" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">地址：</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" maxlength="11" placeholder="请输入地址..." ng-model="info.address" />
+            </div>
+          </div>
+        </form>
+    </div>
+
+    <div class="modal-footer" ng-if="info.close">
+        <div class="col-sm-2 col-sm-offset-10">
+            <button type="submit" class="btn btn-block btn-primary" ng-click="cancel()">关闭</button>
+        </div>
+    </div>
+    <div class="modal-footer" ng-if="!info.close">
+        <div class="col-sm-2 col-sm-offset-8">
+            <button type="submit" class="btn btn-block btn-default" ng-click="cancel()">取消</button>
+        </div>
+        <div class="col-sm-2">
+            <button type="submit" class="btn btn-block btn-success" ng-click="ok()" ng-disabled='agent_info_form.$invalid'>提交</button>
+        </div>
+    </div>
+</div>
