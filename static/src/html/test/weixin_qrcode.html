@@ -1,0 +1,44 @@
+<html>
+<link><title>生成带有logo的二维码</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+<style type="text/css">
+.center {
+width: auto;
+display: table;
+margin-left: auto;
+margin-right: auto;
+}
+.text-center {
+text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="center">
+        <canvas id="qr"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/bower_components/qrious/dist/qrious.min.js"></script>
+<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+
+<script>
+  (function () {
+    var callback = 'http://testmng.cdyzrs.com/html/binding/index.html';
+    var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d9274c880579164"
+      + "&redirect_uri=" + encodeURIComponent(callback) + "&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
+    console.log(encodeURI(callback),encodeURIComponent(callback))
+    const qr = new QRious({
+      element: document.getElementById('qr'),
+      value: url
+    });
+    qr.size = 300;
+  })();</script>
+
+</body>
+</html>

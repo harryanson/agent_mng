@@ -1,0 +1,79 @@
+<html>
+<head>
+  <title>生成带有logo的二维码</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<canvas id="qr"></canvas>
+<script src="/bower_components/qrious/dist/qrious.min.js"></script>
+<script>
+  function getUrlParam(name) {
+    var hash = location.hash; //获取url中"?"符后的字串\
+    console.log('url:',hash);
+    var theRequest = {};
+    if (hash.indexOf("?") != -1) {
+      var str = hash.substr(hash.indexOf("?")+1,hash.length);
+      var strs = str.split("&");
+      for(var i = 0; i < strs.length; i ++) {
+        theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+      }
+    }
+    return theRequest[name];
+  }
+  function utf16to8(str) { //转码
+    var out, i, len, c;
+    out = "";
+    len = str.length;
+    for (i = 0; i < len; i++) {
+      c = str.charCodeAt(i);
+      if ((c >= 0x0001) && (c <= 0x007F)) {
+        out += str.charAt(i);
+      } else if (c > 0x07FF) {
+        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+        out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+      } else {
+        out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+      }
+    }
+    return out;
+  }
+  (function() {
+    var code=getUrlParam('code');
+    alert(code);
+    const qr = new QRious({
+      element: document.getElementById('qr'),
+      value: 'https://neocotic.com/qrious'
+    });
+    text='我想试试二维码生成';
+    console.log(text,utf16to8(text));
+    qr.backgroundAlpha = 0.8;
+    qr.foreground = 'blue';
+    qr.foregroundAlpha = 0.8;
+    qr.level = 'H';
+    qr.padding = 25;
+    qr.size = 500;
+    qr.value = utf16to8(text);
+    var ctx = document.getElementById('qr').getContext("2d");
+    var logo= new Image();
+    logo.src='http://pic1.cxtuku.com/00/07/42/b03695caf529.jpg';
+    var logoWidth = logo.width;
+    var logoHeight = logo.height;
+    var width = qr.size / 3;
+    var height = logoHeight / logoWidth * width;
+    var x = (qr.size / 2) - (width / 2);
+    var y = (qr.size / 2) - (height / 2);
+    var maskPadding = qr.size / 30;
+//    var img=document.getElementById("tulip");
+
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.drawImage(logo, 0, 0, logoWidth, logoHeight, x - maskPadding, y - maskPadding, width + (maskPadding * 2), height + (maskPadding * 2));
+
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.drawImage(logo, 0, 0, logoWidth, logoHeight, x, y, width, height);
+
+  })();
+</script>
+</body>
+</html>

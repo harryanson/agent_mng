@@ -1,0 +1,71 @@
+<html>
+<link><title>生成带有logo的二维码</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+<style type="text/css">
+  .center {
+    width: auto;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .text-center {
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="center">
+        <canvas id="qr"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/bower_components/qrious/dist/qrious.min.js"></script>
+<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+
+<script>
+    function getUuid() {
+    function _p8(s) {
+      let p = (Math.random().toString(16) + "000000000").substr(2, 8);
+      return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
+    }
+    return _p8() + _p8(true) + _p8(true) + _p8();
+  }
+    var uuid=getUuid();
+    (function qr_login(uuid) {
+    var callback = 'http://testmng.cdyzrs.com/html/binding/index.html';
+    var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4d9274c880579164"
+      + "&redirect_uri=" + encodeURIComponent(callback) + "&response_type=code&scope=snsapi_base&state="+uuid+"#wechat_redirect";
+    console.log(encodeURI(callback),encodeURIComponent(callback))
+    const qr = new QRious({
+      element: document.getElementById('qr'),
+      value: url
+    });
+    qr.size = 300;
+    $.ajax({
+      url: '/agent/login', type: 'POST', data: {uuid: uuid}, dataType: 'json'
+      , success: function (data) {
+        if(data.code==0){
+          console.log(data)
+        }else{
+          setTimeout(function(){
+            qr_login(uuid);
+          }, 500);
+
+        }
+      }, error: function (data) {
+        if(data.responseJSON&&data.responseJSON.code==403026){
+          setTimeout(function(){
+            qr_login(uuid);
+          }, 500);
+        }
+      }
+    });
+  })(uuid);</script>
+
+</body>
+</html>

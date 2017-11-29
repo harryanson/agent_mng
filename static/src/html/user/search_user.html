@@ -1,0 +1,67 @@
+<div class="panel panel-default" ng-controller="UserCtrl">
+  <form name="user_info_form" class="form-horizontal">
+    <div class="panel-heading">
+      <div class="row form-group">
+        <div class="col-sm-4">
+          <div class="input-group">
+            <input type="number" ng-model="content" class="form-control" required placeholder="请输入游戏id">
+            <span class="input-group-btn">
+                <button ng-click="search()" ng-disabled="user_info_form.$invalid" class="btn btn-default"><i
+                  class="fa fa-search"></i></button>
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body" ng-show="user">
+      <div class="form-group">
+        <label class="control-label col-sm-2">游戏ID：</label>
+        <div class="col-sm-8">
+          <p class="form-control-static" ng-bind="user.userno"></p>
+        </div>
+      </div>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">游戏昵称：</label>
+        <div class="col-sm-8">
+          <p class="form-control-static" ng-bind="user.nickname"></p>
+        </div>
+      </div>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">三级邀请码：</label>
+        <div class="col-sm-8">
+          <p class="form-control-static" ng-bind="user.thirdAgentno"></p>
+        </div>
+      </div>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">二级邀请码：</label>
+        <div class="col-sm-8">
+          <p class="form-control-static" ng-bind="user.secondAgentno"></p>
+        </div>
+      </div>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">一级邀请码：</label>
+        <div class="col-sm-8">
+          <p class="form-control-static" ng-bind="user.firstAgentno"></p>
+        </div>
+      </div>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">状态：</label>
+        <div class="col-sm-8">
+          <p class="form-control-static" ng-bind="user.flag|enable"></p>
+        </div>
+      </div>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">注册日期：</label>
+        <div class="col-sm-8">
+          <p class="form-control-static" ng-bind="user.regtime|date:'yyyy-MM-dd HH:mm:ss'"></p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
